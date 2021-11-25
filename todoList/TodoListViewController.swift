@@ -17,6 +17,7 @@ class TodoListViewController: UIViewController {
 }
 
 extension TodoListViewController: UICollectionViewDataSource{
+    // MARK: Cell
     func numberOfSections(in collectionView: UICollectionView) -> Int { //섹션의 갯수
         return 2
     }
@@ -29,6 +30,8 @@ extension TodoListViewController: UICollectionViewDataSource{
         }
         return cell
     }
+    
+    // MARK: Header
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind{
         case UICollectionView.elementKindSectionHeader:
