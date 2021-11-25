@@ -8,14 +8,43 @@
 import UIKit
 
 class TodoListViewController: UIViewController {
-
+    
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var inputViewBottom: NSLayoutConstraint!
+    @IBOutlet weak var inputTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(adJustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
+            
+        NotificationCenter.default.addObserver(self, selector: #selector(adJustInputView), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @IBAction func tapView(_ sender: UITapGestureRecognizer) {
+        inputTextField.resignFirstResponder()
     }
     
 }
-
+//
+extension TodoListViewController{
+    @objc private func adJustInputView(noti: Notification){
+        guard let userInfo = noti.userInfo else{
+            return
+        }
+        guard let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+                return
+        }
+        if noti.name == UIResponder.keyboardWillShowNotification{
+            let adjustmentHeight = keyboardFrame.height - view.safeAreaInsets.bottom
+            inputViewBottom.constant = adjustmentHeight
+        }else{
+            inputViewBottom.constant = 0
+        }
+    }
+}
 extension TodoListViewController: UICollectionViewDataSource{
     // MARK: Cell
     func numberOfSections(in collectionView: UICollectionView) -> Int { //섹션의 갯수
@@ -48,6 +77,13 @@ extension TodoListViewController: UICollectionViewDataSource{
     }
 }
 
+extension TodoListViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        let height: CGFloat = 50
+        return CGSize(width: width, height: height)
+    }
+}
 
 
 

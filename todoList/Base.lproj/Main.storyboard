@@ -116,13 +116,13 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
                                         </state>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="작업 추가" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1j1-ib-ZSh">
-                                        <rect key="frame" x="70" y="13" width="326" height="34"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="작업 추가" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1j1-ib-ZSh">
+                                        <rect key="frame" x="70" y="13" width="300" height="34"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="326" id="SbD-qv-5vc"/>
+                                            <constraint firstAttribute="width" constant="300" id="SbD-qv-5vc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -137,6 +137,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fPh-hF-JQT" secondAttribute="trailing" id="2Hj-n5-qdb"/>
                             <constraint firstItem="fPh-hF-JQT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9Ie-nq-6ud"/>
@@ -146,9 +147,21 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fPh-hF-JQT" secondAttribute="bottom" id="hZI-vm-l4a"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GMy-jc-brj" secondAttribute="bottom" id="iKk-hh-pyd"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="BGR-Ou-MD9" appends="YES" id="E88-7c-tM2"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="inputTextField" destination="1j1-ib-ZSh" id="w8S-ke-tXA"/>
+                        <outlet property="inputViewBottom" destination="hZI-vm-l4a" id="dhg-up-P3B"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="BGR-Ou-MD9">
+                    <connections>
+                        <action selector="tapView:" destination="BYZ-38-t0r" id="egb-83-ReK"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-128.98550724637681" y="89.732142857142847"/>
         </scene>
