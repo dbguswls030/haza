@@ -9,5 +9,7 @@ UITableView보다 UICollectionView가 todolist를 구현하기에 적합한 것 
         + checkButton
         + taskName
         + deleteButton
-    
-        
+
+---------------------------
+# 2일차
+
