@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
-struct Todo{
+struct Todo: Equatable{
     var title: String
     var isDone: Bool
     
     mutating func update( todo: Todo){
+        
         self.title = todo.title
         self.isDone = todo.isDone
     }
@@ -29,6 +31,18 @@ class TodoManager{
     
     func todoCount() -> Int{
         return todos.count
+    }
+    func updateTodo(_ todo: Todo){
+        if let index = todos.firstIndex(of: todo){ //*************여기 안 들어가짐;*************//
+            print("g")
+            todos[index].update(todo: todo)
+            
+        }
+    }
+    func deleteTodo(_ todo: Todo){
+        if let index = todos.firstIndex(of: todo){
+            todos.remove(at: index)
+        }
     }
     
 }

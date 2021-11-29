@@ -20,7 +20,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GMy-jc-brj">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mru-xg-rem">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mru-xg-rem">
                                     <size key="itemSize" width="414" height="80"/>
                                     <size key="headerReferenceSize" width="414" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -28,10 +28,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TodoListCell" id="2eE-OI-6Df" customClass="TodoListCell" customModule="todoList" customModuleProvider="target">
-                                        <rect key="frame" x="-4" y="50" width="422" height="80"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L4q-V8-KYi">
-                                            <rect key="frame" x="0.0" y="0.0" width="422" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9X-3g-HWL">
@@ -44,33 +44,36 @@
                                                     <state key="selected" image="checkmark.circle.fill" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="checkTask:" destination="2eE-OI-6Df" eventType="touchUpInside" id="HyX-vn-XRv"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programming" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6va-a6-iqt">
-                                                    <rect key="frame" x="64" y="28.5" width="300" height="23"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="odx-iR-ks6"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="68" y="28.5" width="112.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBh-Zv-RwQ">
-                                                    <rect key="frame" x="374" y="26.5" width="28" height="27"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBh-Zv-RwQ">
+                                                    <rect key="frame" x="366" y="26.5" width="28" height="27"/>
                                                     <color key="tintColor" systemColor="systemGrayColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="trash.circle.fill" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="deleteTask:" destination="2eE-OI-6Df" eventType="touchUpInside" id="b80-Qr-96y"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="6va-a6-iqt" firstAttribute="leading" secondItem="s9X-3g-HWL" secondAttribute="trailing" constant="16" id="02e-Xa-wdV"/>
+                                                <constraint firstItem="6va-a6-iqt" firstAttribute="leading" secondItem="s9X-3g-HWL" secondAttribute="trailing" constant="20" id="02e-Xa-wdV"/>
                                                 <constraint firstItem="s9X-3g-HWL" firstAttribute="centerY" secondItem="L4q-V8-KYi" secondAttribute="centerY" id="2Hq-yG-jzl"/>
                                                 <constraint firstAttribute="trailing" secondItem="WBh-Zv-RwQ" secondAttribute="trailing" constant="20" id="2p6-kX-5Vd"/>
+                                                <constraint firstItem="WBh-Zv-RwQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6va-a6-iqt" secondAttribute="trailing" constant="20" id="Dse-rY-3Xz"/>
                                                 <constraint firstItem="WBh-Zv-RwQ" firstAttribute="centerY" secondItem="L4q-V8-KYi" secondAttribute="centerY" id="L4z-2Y-Tgt"/>
                                                 <constraint firstItem="6va-a6-iqt" firstAttribute="centerY" secondItem="L4q-V8-KYi" secondAttribute="centerY" id="ODa-Af-WvJ"/>
                                                 <constraint firstItem="s9X-3g-HWL" firstAttribute="leading" secondItem="L4q-V8-KYi" secondAttribute="leading" constant="20" id="XTC-hr-o1Q"/>
-                                                <constraint firstItem="WBh-Zv-RwQ" firstAttribute="leading" secondItem="6va-a6-iqt" secondAttribute="trailing" constant="10" id="iiJ-mc-7Zq"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>

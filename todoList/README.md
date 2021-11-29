@@ -40,10 +40,34 @@ UITextField 클릭 시 키보드가 올라옴, 이 때 키보드의 높이를 �
 + 키보드 영역 밖 터치하면 키보드 내리기
     + UITextField를 클릭하면 포커스가 잡혀서 키보드가 올라오는 거라 이 포커스를 끊어주면 됨
         + UITextField.resignFirstResponder()
--------------------------
+--------------------------
 # 3일차
--------------------------
-### 작업 추가하기
+--------------------------
+### 작업 추가
+textField에 작업명 작성 후 버튼 클릭 -> textField.text의 내용대로 todo 생성 -> 생성된 todo를 view에 보여주기
 
-    
+
+### 작업 완료
+taskbutton 클릭 시 taskName 취소선 적용 및 투명도 증가
+
++ 작업 완료 시
+```
+            let attributeString = NSMutableAttributedString(string: taskName.text!)
+            
+            attributeString.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributeString.length))
+            taskName.attributedText = attributeString
+```
++ 작업 완료 취소 시
+```
+            let attributeString = NSMutableAttributedString(string: taskName.text!)
+            
+            
+            taskName.attributedText = attributeString
+```
+["완료됨" 섹션 생성 후 옮기기] - 추후 작업할 것
+
+### 작업 삭제
+버튼 안 바뀌어서 아직 확인 못 함;;
+
+
 

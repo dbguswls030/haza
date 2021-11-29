@@ -14,19 +14,16 @@ class TodoListViewController: UIViewController {
     @IBOutlet weak var inputViewBottom: NSLayoutConstraint!
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var inputButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
     @IBAction func inputTask(_ sender: UIButton) {
-        guard let task = inputTextField.text, task.isEmpty == false  else{
+        guard let task = inputTextField.text, task.isEmpty == false else{
             return
         }
         TodoManager.shared.creatTask(task)
         collectionView.reloadData()
         inputTextField.text = ""
     }
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -39,7 +36,6 @@ class TodoListViewController: UIViewController {
     @IBAction func tapView(_ sender: UITapGestureRecognizer) {
         inputTextField.resignFirstResponder()
     }
-    
 }
 //
 extension TodoListViewController{
@@ -70,8 +66,22 @@ extension TodoListViewController: UICollectionViewDataSource{
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoListCell", for: indexPath) as? TodoListCell else{
             return UICollectionViewCell()
         }
-        let todo = TodoManager.shared.todos[indexPath.item]
+        var todo = TodoManager.shared.todos[indexPath.item]
         
+        
+        
+        cell.doneButtonTap = { isDone in
+            
+            todo.isDone = isDone
+            print(todo.isDone)
+            TodoManager.shared.updateTodo(todo)
+            
+            self.collectionView.reloadData()
+        }
+        cell.deleteButtonTap = {
+            TodoManager.shared.deleteTodo(todo)
+            self.collectionView.reloadData()
+        }
         cell.updateUI(todo)
         return cell
     }
@@ -99,6 +109,8 @@ extension TodoListViewController: UICollectionViewDelegateFlowLayout{
         let height: CGFloat = 50
         return CGSize(width: width, height: height)
     }
+    
+    
 }
 
 
@@ -108,23 +120,58 @@ class TodoListCell: UICollectionViewCell{
     @IBOutlet weak var taskName: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     
+    var doneButtonTap: ((Bool) -> Void)?
+    var deleteButtonTap: (()->Void)?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        //reset()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        //reset()
+    }
+    
     func updateUI(_ todo: Todo){
         taskName.text = todo.title
         checkButton.isSelected = todo.isDone
+        deleteButton.isHidden = false
+    }
+    func strikeThrough(_ show: Bool){
+        if show == true{
+            let attributeString = NSMutableAttributedString(string: taskName.text!)
+
+            attributeString.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributeString.length))
+            taskName.attributedText = attributeString
+        }else{
+            let attributeString = NSMutableAttributedString(string: taskName.text!)
+
+            //attributeString.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributeString.length))
+            taskName.attributedText = attributeString
+        }
+    }
+    @IBAction func checkTask(_ sender: UIButton) {
+        
+        checkButton.isSelected = !checkButton.isSelected
+        let isDone = checkButton.isSelected
+        strikeThrough(isDone)
+        taskName.alpha = isDone ? 0.2 : 1
+        doneButtonTap?(isDone)
+        
     }
     
+    @IBAction func deleteTask(_ sender: UIButton) {
+        deleteButtonTap?()
+    }
     
 }
 class TodoListHeaderView: UICollectionReusableView{
     @IBOutlet weak var headerTitle: UILabel!
     
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//    }
-    
-    
-    
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
     
 }
 
