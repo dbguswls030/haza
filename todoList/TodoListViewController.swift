@@ -13,6 +13,19 @@ class TodoListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var inputViewBottom: NSLayoutConstraint!
     @IBOutlet weak var inputTextField: UITextField!
+    @IBOutlet weak var inputButton: UIButton!
+    
+    @IBAction func inputTask(_ sender: UIButton) {
+        guard let task = inputTextField.text, task.isEmpty == false  else{
+            return
+        }
+        TodoManager.shared.creatTask(task)
+        collectionView.reloadData()
+        inputTextField.text = ""
+    }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,15 +61,18 @@ extension TodoListViewController{
 extension TodoListViewController: UICollectionViewDataSource{
     // MARK: Cell
     func numberOfSections(in collectionView: UICollectionView) -> Int { //섹션의 갯수
-        return 2
+        return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { //섹션당 아이템 갯수
-        return 2
+        return TodoManager.shared.todoCount()
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoListCell", for: indexPath) as? TodoListCell else{
             return UICollectionViewCell()
         }
+        let todo = TodoManager.shared.todos[indexPath.item]
+        
+        cell.updateUI(todo)
         return cell
     }
     
@@ -91,6 +107,13 @@ class TodoListCell: UICollectionViewCell{
     @IBOutlet weak var checkButton: UIButton!
     @IBOutlet weak var taskName: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
+    
+    func updateUI(_ todo: Todo){
+        taskName.text = todo.title
+        checkButton.isSelected = todo.isDone
+    }
+    
+    
 }
 class TodoListHeaderView: UICollectionReusableView{
     @IBOutlet weak var headerTitle: UILabel!
@@ -98,5 +121,10 @@ class TodoListHeaderView: UICollectionReusableView{
 //    override func awakeFromNib() {
 //        super.awakeFromNib()
 //    }
+    
+    
+    
+    
+    
 }
 

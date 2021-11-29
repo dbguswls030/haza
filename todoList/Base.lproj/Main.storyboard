@@ -109,17 +109,20 @@
                                 <rect key="frame" x="0.0" y="802" width="414" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZC-IO-cEJ">
-                                        <rect key="frame" x="20" y="14.5" width="35" height="31"/>
+                                        <rect key="frame" x="364" y="14.5" width="35" height="31"/>
                                         <color key="tintColor" systemColor="systemIndigoColor"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="plus.app" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
                                         </state>
+                                        <connections>
+                                            <action selector="inputTask:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GJj-hM-U0f"/>
+                                        </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="작업 추가" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1j1-ib-ZSh">
-                                        <rect key="frame" x="70" y="13" width="300" height="34"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="작업 추가" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1j1-ib-ZSh">
+                                        <rect key="frame" x="15" y="13" width="334" height="34"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="SbD-qv-5vc"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="VMA-4x-Jpy"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -129,9 +132,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="5BI-rG-3I3"/>
                                     <constraint firstItem="UZC-IO-cEJ" firstAttribute="centerY" secondItem="fPh-hF-JQT" secondAttribute="centerY" id="BxF-mK-gOC"/>
-                                    <constraint firstItem="UZC-IO-cEJ" firstAttribute="leading" secondItem="fPh-hF-JQT" secondAttribute="leading" constant="20" id="Kw1-zZ-qMR"/>
-                                    <constraint firstItem="1j1-ib-ZSh" firstAttribute="centerY" secondItem="fPh-hF-JQT" secondAttribute="centerY" id="SdA-Yy-SEF"/>
-                                    <constraint firstItem="1j1-ib-ZSh" firstAttribute="leading" secondItem="UZC-IO-cEJ" secondAttribute="trailing" constant="15" id="yE8-4l-Q79"/>
+                                    <constraint firstAttribute="trailing" secondItem="UZC-IO-cEJ" secondAttribute="trailing" constant="15" id="fhH-d9-3Av"/>
+                                    <constraint firstItem="1j1-ib-ZSh" firstAttribute="centerY" secondItem="UZC-IO-cEJ" secondAttribute="centerY" id="jlc-tI-ppb"/>
+                                    <constraint firstItem="1j1-ib-ZSh" firstAttribute="leading" secondItem="fPh-hF-JQT" secondAttribute="leading" constant="15" id="qnM-Ub-h3e"/>
+                                    <constraint firstItem="UZC-IO-cEJ" firstAttribute="leading" secondItem="1j1-ib-ZSh" secondAttribute="trailing" constant="15" id="wzi-dR-OfO"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -152,8 +156,10 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="GMy-jc-brj" id="0cu-FG-r8Y"/>
+                        <outlet property="inputButton" destination="UZC-IO-cEJ" id="Wpq-Zd-xUR"/>
                         <outlet property="inputTextField" destination="1j1-ib-ZSh" id="w8S-ke-tXA"/>
-                        <outlet property="inputViewBottom" destination="hZI-vm-l4a" id="dhg-up-P3B"/>
+                        <outlet property="inputViewBottom" destination="hZI-vm-l4a" id="cRI-fz-99o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
