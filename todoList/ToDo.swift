@@ -16,14 +16,45 @@ struct Todo: Equatable{
         
         self.title = todo.title
         self.isDone = todo.isDone
+        
+    }
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        // [x]TODO: 동등 조건 추가
+        return lhs.title == rhs.title
+        
     }
 }
 
 
 class TodoManager{
+    enum Section: Int, CaseIterable {
+        case todo
+        case finished
+        
+        var title: String {
+            switch self {
+            case .todo: return "To Do List"
+            default: return "Finished List"
+            }
+        }
+    }
     static let shared = TodoManager()
     
     var todos = [Todo]()
+    
+    var todoList: [Todo]{
+        return todos.filter{$0.isDone == false}
+    }
+    
+    var finishedList: [Todo]{
+        return todos.filter{$0.isDone == true}
+    }
+    
+    var numOfSection: Int{
+        return Section.allCases.count
+    }
+    
+    
     
     func creatTask(_ title: String){
         todos.append(Todo(title: title, isDone: false))
@@ -33,10 +64,8 @@ class TodoManager{
         return todos.count
     }
     func updateTodo(_ todo: Todo){
-        if let index = todos.firstIndex(of: todo){ //*************여기 안 들어가짐;*************//
-            print("g")
+        if let index = todos.firstIndex(of: todo){
             todos[index].update(todo: todo)
-            
         }
     }
     func deleteTodo(_ todo: Todo){

@@ -8,13 +8,10 @@
 import UIKit
 
 class TodoListViewController: UIViewController {
-    
-    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var inputViewBottom: NSLayoutConstraint!
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var inputButton: UIButton!
-    @IBOutlet weak var deleteButton: UIButton!
     
     @IBAction func inputTask(_ sender: UIButton) {
         guard let task = inputTextField.text, task.isEmpty == false else{
@@ -27,7 +24,6 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         NotificationCenter.default.addObserver(self, selector: #selector(adJustInputView), name: UIResponder.keyboardWillShowNotification, object: nil)
             
         NotificationCenter.default.addObserver(self, selector: #selector(adJustInputView), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -54,28 +50,37 @@ extension TodoListViewController{
         }
     }
 }
+
+
 extension TodoListViewController: UICollectionViewDataSource{
     // MARK: Cell
     func numberOfSections(in collectionView: UICollectionView) -> Int { //섹션의 갯수
-        return 1
+        return TodoManager.shared.numOfSection
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { //섹션당 아이템 갯수
-        return TodoManager.shared.todoCount()
+        if section == 0{
+            return TodoManager.shared.todoList.count
+        }else{
+            return TodoManager.shared.finishedList.count
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoListCell", for: indexPath) as? TodoListCell else{
             return UICollectionViewCell()
         }
-        var todo = TodoManager.shared.todos[indexPath.item]
-        
+//        var todo = TodoManager.shared.todos[indexPath.item]
+        var todo: Todo
+        if indexPath.section == 0{
+            todo = TodoManager.shared.todoList[indexPath.item]
+        }else{
+            todo = TodoManager.shared.finishedList[indexPath.item]
+        }
         
         
         cell.doneButtonTap = { isDone in
-            
             todo.isDone = isDone
-            print(todo.isDone)
             TodoManager.shared.updateTodo(todo)
-            
             self.collectionView.reloadData()
         }
         cell.deleteButtonTap = {
@@ -93,13 +98,16 @@ extension TodoListViewController: UICollectionViewDataSource{
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TodoListHeaderView", for: indexPath) as? TodoListHeaderView else{
                 return UICollectionReusableView()
             }
-            header.headerTitle.text = "Task"
-            return header
             
+            guard let section = TodoManager.Section(rawValue: indexPath.section) else {
+                return UICollectionReusableView()
+            }
+            
+            header.headerTitle.text = section.title
+            return header
         default:
             return UICollectionReusableView()
         }
-        
     }
 }
 
@@ -109,8 +117,6 @@ extension TodoListViewController: UICollectionViewDelegateFlowLayout{
         let height: CGFloat = 50
         return CGSize(width: width, height: height)
     }
-    
-    
 }
 
 
@@ -141,7 +147,6 @@ class TodoListCell: UICollectionViewCell{
     func strikeThrough(_ show: Bool){
         if show == true{
             let attributeString = NSMutableAttributedString(string: taskName.text!)
-
             attributeString.addAttribute(.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributeString.length))
             taskName.attributedText = attributeString
         }else{
@@ -152,13 +157,11 @@ class TodoListCell: UICollectionViewCell{
         }
     }
     @IBAction func checkTask(_ sender: UIButton) {
-        
         checkButton.isSelected = !checkButton.isSelected
         let isDone = checkButton.isSelected
         strikeThrough(isDone)
         taskName.alpha = isDone ? 0.2 : 1
         doneButtonTap?(isDone)
-        
     }
     
     @IBAction func deleteTask(_ sender: UIButton) {
