@@ -1,4 +1,4 @@
-enum Counter
+# enum Counter
 - 증가, 감소, 리셋 3가지 유형으로 구분
 
 # Counter(증가,감소,리셋)가 이루어질 때마다
