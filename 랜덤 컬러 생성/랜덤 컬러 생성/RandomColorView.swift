@@ -31,6 +31,14 @@ class RandomColorView: UIView {
         return label
     }()
     
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayout()
@@ -42,23 +50,22 @@ class RandomColorView: UIView {
     
     private func configureLayout(){
         backgroundColor = .systemBackground
-        [randomButton, resetButton, rgbLabel].forEach({ addSubview($0) })
         
+        [randomButton, resetButton].forEach{
+            stackView.addArrangedSubview($0)
+        }
+        [stackView, rgbLabel].forEach({ addSubview($0) })
+
         NSLayoutConstraint.activate([
             rgbLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             rgbLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            randomButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 50),
-            randomButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -150)
-        ])
-        
-        NSLayoutConstraint.activate([
-            resetButton.leftAnchor.constraint(equalTo: randomButton.rightAnchor, constant: 15),
-            resetButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -150)
+            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 60),
+            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -60),
+            stackView.heightAnchor.constraint(equalToConstant: 40),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -150)
         ])
     }
-    
-    
 }
