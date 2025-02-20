@@ -49,7 +49,7 @@ private func checkLimitNumber(){ // 버튼 활성화/비활성화 설정
     increaseButton.isEnabled = number == maxNumber ? false : true
 }
 ```
-## 4. 숫자 보이기
+## 4. 숫자 표시
 ```
 private func showNumber(){
     numberLabel.text = "\(number)"
