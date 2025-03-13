@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum ErrorType: String, Error{
+    case InvalidInput = "올바르지 않은 입력입니다."
+}
+
 final class BaseballGame{
     private var answer = [Int]()
     
@@ -28,36 +32,42 @@ final class BaseballGame{
                 let randomNum = Int.random(in: 0...9) // 1부터 9까지의 랜덤 수
                 if !temp.contains(randomNum){ // 중복 숫자 필터
                     temp.insert(randomNum)
+                    answer.append(randomNum)
                 }
-                answer.append(randomNum)
             }
         }
-        print(answer)
     }
 
     private func gameStart(){
         var isContinuous = true
+        
         while isContinuous {
             print("숫자를 입력하세요")
             let input = readLine()!.map{String($0)}
-            
-            checkValidInput(input: input){ inputNums in
-                if self.isAnswer(userInput: inputNums){
+        
+            do{
+                let inputNums = try checkInput(input: input)
+                if isAnswer(userInput: inputNums){
                     isContinuous = false
                 }
+            }catch let error{
+                guard let myError = error as? ErrorType else {
+                    print("unknown error")
+                    return
+                }
+                print(myError.rawValue)
             }
         }
     }
     
-    private func checkValidInput(input: [String], completion: @escaping ([Int]) -> Void){
+    private func checkInput(input: [String]) throws -> [Int]{
         let inputNums = input.compactMap({Int($0)})
+        
         if input.count != 3 || inputNums.count != 3{
-            print("올바르지 않은 입력값입니다.")
-        }else{
-            completion(inputNums)
+            throw ErrorType.InvalidInput
         }
+        return inputNums
     }
-    
     
     private func isAnswer(userInput: [Int]) -> Bool{
         var strike = 0
@@ -85,13 +95,11 @@ final class BaseballGame{
         }else{
             let strikeToString = strike != 0 ? "\(strike) 스트라이크 " : ""
             let ballToString = ball != 0 ? "\(ball) 볼" : ""
-            print(strikeToString + ballToString )
+            print(strikeToString + ballToString)
             return false
         }
     }
 }
-
-
 
 let game = BaseballGame()
 game.start()
