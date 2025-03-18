@@ -7,12 +7,13 @@
 
 import Foundation
 
+print("필수 1")
 let toString = Problem1()
 print(toString.sum(1,2))
 toString.calculate(num1: 3, num2: 4, closure: toString.sum)
 
 
-
+print("필수 2")
 let toForEach = Problem2()
 
 toForEach.toForEach()
