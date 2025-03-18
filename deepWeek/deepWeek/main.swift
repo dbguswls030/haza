@@ -18,5 +18,7 @@ let toForEach = Problem2()
 toForEach.toForEach()
 print(toForEach.numbers)
 
+print(toForEach.chaining(input: [1,2,3,4,5,6,7,8,9,10]))
+
 let result = toForEach.myMap([1,2,3,4,5])
 print(result)
