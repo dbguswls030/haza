@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ToString{
+class Problem1{
     let sum: (Int, Int) -> String = {
         return "두 수의 합계는 \($0 + $1) 입니다."
     }
