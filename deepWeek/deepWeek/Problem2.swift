@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Problem2{
+final class Problem2{
     let numbers = [1,2,3,4,5]
     
     var result = [String]()

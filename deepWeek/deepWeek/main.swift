@@ -23,3 +23,16 @@ print(toForEach.chaining(input: [1,2,3,4,5,6,7,8,9,10]))
 
 let result = toForEach.myMap([1,2,3,4,5])
 print(result)
+
+
+
+print("필수 3")
+let problem3 = Problem3()
+print(problem3.a(array: [1,2,3,4,5]))
+
+print(problem3.b(array: ["가", "나", "다", "라", "마"]))
+
+print(problem3.c(array: [1,2,3,4,5]))
+print(problem3.c(array: ["가", "나", "다", "라", "마"]))
+
+print(problem3.d(array: [1,2,3,4,5]))
