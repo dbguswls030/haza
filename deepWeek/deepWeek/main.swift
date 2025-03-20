@@ -21,7 +21,9 @@ print(toForEach.numbers) // [1, 2, 3, 4, 5]
 
 print(toForEach.chaining(input: [1,2,3,4,5,6,7,8,9,10])) // ["2", "4", "6", "8", "10"]
 
-let result = toForEach.myMap([1,2,3,4,5])
+let result = toForEach.myMap([1,2,3,4,5]) {
+    String($0)
+}
 print(result) // ["1", "2", "3", "4", "5"]
 
 

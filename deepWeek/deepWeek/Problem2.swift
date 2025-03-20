@@ -18,9 +18,7 @@ final class Problem2{
     //     result.append(number)
     // }
     func toForEach(){
-        numbers.forEach{
-            result.append(String($0))
-        }
+        result = numbers.map{String($0)}
     }
     
     // 주어진 입력값을 고차함수를 체이닝하여 주어진 출력값이 나오도록 구현해주세요.
@@ -31,11 +29,7 @@ final class Problem2{
     }
     
     // 체이닝 고차함수 직접 만들기
-    let myMap: ([Int]) -> ([String]) = {
-        var result: [String] = []
-        for num in $0 {
-            result.append(String(num))
-        }
-        return result
+    func myMap(_ arr: [Int], completion: (Int) -> String) -> [String] {
+        arr.map{completion($0)}
     }
 }
