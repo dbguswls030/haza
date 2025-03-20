@@ -18,9 +18,7 @@ final class Problem2{
     //     result.append(number)
     // }
     func toForEach(){
-        numbers.forEach{
-            result.append(String($0))
-        }
+        result = numbers.map{String($0)}
     }
     
     // 주어진 입력값을 고차함수를 체이닝하여 주어진 출력값이 나오도록 구현해주세요.
@@ -38,4 +36,5 @@ final class Problem2{
         }
         return result
     }
+    
 }
