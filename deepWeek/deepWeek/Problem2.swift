@@ -29,12 +29,7 @@ final class Problem2{
     }
     
     // 체이닝 고차함수 직접 만들기
-    let myMap: ([Int]) -> ([String]) = {
-        var result: [String] = []
-        for num in $0 {
-            result.append(String(num))
-        }
-        return result
+    func myMap(_ arr: [Int], completion: (Int) -> String) -> [String] {
+        arr.map{completion($0)}
     }
-    
 }
