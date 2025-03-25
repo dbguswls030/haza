@@ -41,4 +41,8 @@ final class SeriesCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
+    
+    func setSeriesNumber(number: Int){
+        seriesNumberLabel.text = "\(number)"
+    }
 }

@@ -12,7 +12,7 @@ final class HarrayPotterView: UIView {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Harry Potter and the Philosopher’s Stone"
+//        label.text = "Harry Potter and the Philosopher’s Stone"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 24, weight: .bold)
@@ -54,5 +54,9 @@ final class HarrayPotterView: UIView {
             make.centerX.equalToSuperview()
             make.height.equalTo(32)
         }
+    }
+    
+    func setBookTitle(title: String){
+        bookTitleLabel.text = title
     }
 }

@@ -10,6 +10,8 @@ import SnapKit
 
 final class MainViewController: UIViewController {
     
+    private let viewModel: MainViewModel = MainViewModel()
+    
     private lazy var harrayPotterView: HarrayPotterView = {
         return HarrayPotterView()
     }()
@@ -17,9 +19,12 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.loadBooks()
+        
         configureLayout()
         configureSeriesCollectionView()
         configureSeriesCollectionView()
+        setBookTitle(index: 0)
     }
     
     private func configureLayout(){
@@ -35,6 +40,11 @@ final class MainViewController: UIViewController {
         harrayPotterView.seriesCollectionView.delegate = self
         harrayPotterView.seriesCollectionView.dataSource = self
     }
+    
+    // TODO: view titleLabel에 제목 표시
+    private func setBookTitle(index: Int){
+        harrayPotterView.setBookTitle(title: viewModel.getBookTitle(index: index))
+    }
 }
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -45,7 +55,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeriesCollectionViewCell.identifier, for: indexPath) as? SeriesCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
+        cell.setSeriesNumber(number: indexPath.item+1)
         return cell
     }
     
