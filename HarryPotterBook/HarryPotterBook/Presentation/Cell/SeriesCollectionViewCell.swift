@@ -14,7 +14,6 @@ final class SeriesCollectionViewCell: UICollectionViewCell {
         
     private lazy var seriesNumberLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .center
         label.textColor = .white
@@ -23,6 +22,7 @@ final class SeriesCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         configureLayout()
     }
     
@@ -43,6 +43,8 @@ final class SeriesCollectionViewCell: UICollectionViewCell {
     }
     
     func setSeriesNumber(number: Int){
-        seriesNumberLabel.text = "\(number)"
+        DispatchQueue.main.async{ [weak self] in
+            self?.seriesNumberLabel.text = "\(number)"
+        }
     }
 }

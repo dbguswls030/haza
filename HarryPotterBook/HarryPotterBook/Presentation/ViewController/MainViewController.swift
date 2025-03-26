@@ -19,12 +19,14 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.loadBooks()
-        
         configureLayout()
-        configureSeriesCollectionView()
-        configureSeriesCollectionView()
-        setBookTitle(index: 0)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        bindViewModel()
+        viewModel.loadBooks()
     }
     
     private func configureLayout(){
@@ -41,9 +43,33 @@ final class MainViewController: UIViewController {
         harrayPotterView.seriesCollectionView.dataSource = self
     }
     
-    // TODO: view titleLabel에 제목 표시
     private func setBookTitle(index: Int){
         harrayPotterView.setBookTitle(title: viewModel.getBookTitle(index: index))
+    }
+    
+    private func setBookInfo(index: Int){
+        harrayPotterView.setBookInfo(book: viewModel.getBook(index: index))
+        harrayPotterView.setBookThumnail(index: index)
+    }
+    
+    private func bindViewModel(){
+        viewModel.successedLoad = { [weak self] in
+            DispatchQueue.main.async{
+                self?.setBookTitle(index: 2)
+                self?.setBookInfo(index: 2)
+                self?.configureSeriesCollectionView()
+            }
+        }
+        
+        viewModel.jsonParseErrorListenr = { [weak self] error in
+            self?.showAlert(message: error)
+        }
+    }
+    
+    private func showAlert(message: String){
+        let alertVC = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "확인", style: .default))
+        self.present(alertVC, animated: true)
     }
 }
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
@@ -55,7 +81,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeriesCollectionViewCell.identifier, for: indexPath) as? SeriesCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.setSeriesNumber(number: indexPath.item+1)
+        cell.setSeriesNumber(number: viewModel.getSeriesNumber(index: indexPath.item))
         return cell
     }
     

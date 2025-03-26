@@ -12,7 +12,6 @@ final class HarrayPotterView: UIView {
     
     private lazy var bookTitleLabel: UILabel = {
         let label = UILabel()
-//        label.text = "Harry Potter and the Philosopher’s Stone"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 24, weight: .bold)
@@ -30,6 +29,10 @@ final class HarrayPotterView: UIView {
         return collectionView
     }()
     
+    private lazy var bookInfoStackView: BookInfoStackView = {
+        return BookInfoStackView()
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayout()
@@ -42,6 +45,7 @@ final class HarrayPotterView: UIView {
     private func configureLayout(){
         addSubview(bookTitleLabel)
         addSubview(seriesCollectionView)
+        addSubview(bookInfoStackView)
         
         bookTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
@@ -54,9 +58,26 @@ final class HarrayPotterView: UIView {
             make.centerX.equalToSuperview()
             make.height.equalTo(32)
         }
+
+        bookInfoStackView.snp.makeConstraints { make in
+            make.top.equalTo(seriesCollectionView.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(25)
+        }
     }
     
     func setBookTitle(title: String){
         bookTitleLabel.text = title
+    }
+    
+    func setBookInfo(book: Book){
+        bookInfoStackView
+            .setBookInfo(title: book.title,
+                          author: book.author,
+                          released: book.releaseDate,
+                          pages: "\(book.pages)")
+    }
+    
+    func setBookThumnail(index: Int){
+        bookInfoStackView.setBookThumbnail(index: index)
     }
 }
