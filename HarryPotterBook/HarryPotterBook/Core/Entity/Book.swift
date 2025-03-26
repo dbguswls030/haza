@@ -8,6 +8,7 @@
 import Foundation
 
 struct Book{
+    let seriesNumber: Int
     let title: String
     let author: String
     let pages: Int

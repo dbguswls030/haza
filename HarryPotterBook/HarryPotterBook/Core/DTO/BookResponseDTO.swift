@@ -43,8 +43,9 @@ struct ChaptersResponse: Decodable{
 
 extension BookDTO{
     
-    func toEntity() -> Book{
-        return Book(title: title,
+    func toEntity(offset: Int) -> Book{
+        return Book(seriesNumber: offset,
+                    title: title,
                     author: author,
                     pages: pages,
                     releaseDate: convertReleaseDateString(releasDate: releaseDate),

@@ -23,7 +23,7 @@ final class DataService {
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             let bookResponse = try JSONDecoder().decode(BookResponseDTO.self, from: data)
-            let books = bookResponse.data.map { $0.attributes.toEntity() }
+            let books = bookResponse.data.enumerated().map { $0.element.attributes.toEntity(offset: $0.offset+1) }
             completion(.success(books))
         } catch {
             print("🚨 JSON 파싱 에러 : \(error)")
