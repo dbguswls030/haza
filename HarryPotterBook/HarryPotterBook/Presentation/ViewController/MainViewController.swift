@@ -41,7 +41,6 @@ final class MainViewController: UIViewController {
         harrayPotterView.seriesCollectionView.dataSource = self
     }
     
-    // TODO: view titleLabel에 제목 표시
     private func setBookTitle(index: Int){
         harrayPotterView.setBookTitle(title: viewModel.getBookTitle(index: index))
     }
