@@ -68,4 +68,16 @@ final class HarrayPotterView: UIView {
     func setBookTitle(title: String){
         bookTitleLabel.text = title
     }
+    
+    func setBookInfo(book: Book){
+        bookInfoStackView
+            .setBookInfo(title: book.title,
+                          author: book.author,
+                          released: book.releaseDate,
+                          pages: "\(book.pages)")
+    }
+    
+    func setBookThumnail(index: Int){
+        bookInfoStackView.setBookThumbnail(index: index)
+    }
 }

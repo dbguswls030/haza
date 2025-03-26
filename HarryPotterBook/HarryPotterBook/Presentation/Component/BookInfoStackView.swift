@@ -153,4 +153,24 @@ final class BookInfoStackView: UIStackView {
             make.height.equalTo(thumbnailImageView.snp.width).multipliedBy(1.5)
         }
     }
+    
+    func setBookInfo(title: String, author: String, released: String, pages: String){
+        infoTitleLabel.text = title
+        authorLabel.text = author
+        releasedLabel.text = released
+        pagesLabel.text = pages
+    }
+    
+    func setBookThumbnail(index: Int){
+        switch index{
+        case 1: thumbnailImageView.image = .harrypotter1
+        case 2: thumbnailImageView.image = .harrypotter2
+        case 3: thumbnailImageView.image = .harrypotter3
+        case 4: thumbnailImageView.image = .harrypotter4
+        case 5: thumbnailImageView.image = .harrypotter5
+        case 6: thumbnailImageView.image = .harrypotter6
+        case 7: thumbnailImageView.image = .harrypotter7
+        default: break
+        }
+    }
 }

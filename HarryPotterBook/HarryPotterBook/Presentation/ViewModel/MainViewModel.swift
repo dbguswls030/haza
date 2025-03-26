@@ -33,6 +33,10 @@ final class MainViewModel{
         return books[index].title
     }
     
+    func getBook(index: Int) -> Book{
+        return books[index]
+    }
+    
 }
 // 1. 오류 전달
 // 2. 오류 전달 받으면 메소드 호출

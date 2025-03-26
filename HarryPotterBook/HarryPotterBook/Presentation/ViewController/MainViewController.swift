@@ -18,7 +18,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         configureLayout()
         configureSeriesCollectionView()
     }
@@ -48,13 +48,20 @@ final class MainViewController: UIViewController {
         harrayPotterView.setBookTitle(title: viewModel.getBookTitle(index: index))
     }
     
+    private func setBookInfo(index: Int){
+        harrayPotterView.setBookInfo(book: viewModel.getBook(index: index))
+        harrayPotterView.setBookThumnail(index: index)
+    }
+    
     private func bindViewModel(){
         viewModel.successedLoad = { [weak self] in
-            self?.setBookTitle(index: 0)
+            DispatchQueue.main.async{
+                self?.setBookTitle(index: 2)
+                self?.setBookInfo(index: 2)
+            }
         }
         
         viewModel.jsonParseErrorListenr = { [weak self] error in
-            print("엥")
             self?.showAlert(message: error)
         }
     }
