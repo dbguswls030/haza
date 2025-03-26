@@ -19,7 +19,6 @@ final class BookInfoStackView: UIStackView {
     
     private lazy var infoTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Harry Potter and the Philosopher’s Stone"
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
@@ -55,7 +54,6 @@ final class BookInfoStackView: UIStackView {
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.text = "J. K. Rowling"
         label.font = .systemFont(ofSize: 18)
         label.textColor = .darkGray
         return label
@@ -81,7 +79,6 @@ final class BookInfoStackView: UIStackView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
-        label.text = "June 26, 1997"
         return label
     }()
     
@@ -105,7 +102,6 @@ final class BookInfoStackView: UIStackView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
-        label.text = "223"
         return label
     }()
     

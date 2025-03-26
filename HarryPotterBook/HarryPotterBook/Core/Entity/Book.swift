@@ -18,6 +18,3 @@ struct Book{
     let wiki: URL?
     let chapters: [String]
 }
-
-// Date 타입 형식 바꾸고
-// Book Entity에 이미지도 삽입되도록
