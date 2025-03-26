@@ -18,13 +18,16 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.loadBooks()
-        
+    
         configureLayout()
         configureSeriesCollectionView()
-        configureSeriesCollectionView()
-        setBookTitle(index: 0)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        bindViewModel()
+        viewModel.loadBooks()
     }
     
     private func configureLayout(){
@@ -43,6 +46,23 @@ final class MainViewController: UIViewController {
     
     private func setBookTitle(index: Int){
         harrayPotterView.setBookTitle(title: viewModel.getBookTitle(index: index))
+    }
+    
+    private func bindViewModel(){
+        viewModel.successedLoad = { [weak self] in
+            self?.setBookTitle(index: 0)
+        }
+        
+        viewModel.jsonParseErrorListenr = { [weak self] error in
+            print("엥")
+            self?.showAlert(message: error)
+        }
+    }
+    
+    private func showAlert(message: String){
+        let alertVC = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "확인", style: .default))
+        self.present(alertVC, animated: true)
     }
 }
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
