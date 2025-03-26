@@ -20,7 +20,6 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         configureLayout()
-        configureSeriesCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,6 +57,7 @@ final class MainViewController: UIViewController {
             DispatchQueue.main.async{
                 self?.setBookTitle(index: 2)
                 self?.setBookInfo(index: 2)
+                self?.configureSeriesCollectionView()
             }
         }
         
@@ -81,7 +81,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeriesCollectionViewCell.identifier, for: indexPath) as? SeriesCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.setSeriesNumber(number: indexPath.item+1)
+        cell.setSeriesNumber(number: viewModel.getSeriesNumber(index: indexPath.item))
         return cell
     }
     

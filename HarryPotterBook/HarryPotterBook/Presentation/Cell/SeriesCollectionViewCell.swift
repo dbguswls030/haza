@@ -43,6 +43,9 @@ final class SeriesCollectionViewCell: UICollectionViewCell {
     }
     
     func setSeriesNumber(number: Int){
-        seriesNumberLabel.text = "\(number)"
+        DispatchQueue.main.async{ [weak self] in
+            self?.seriesNumberLabel.text = "\(number)"
+        }
+        
     }
 }

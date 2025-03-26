@@ -14,7 +14,7 @@ final class MainViewModel{
     
     var jsonParseErrorListenr: ((String) -> Void)?
     var successedLoad: (() -> Void)?
-    
+
     func loadBooks() {
         dataService.loadBooks { [weak self] result in
             guard let self = self else { return }
@@ -35,6 +35,10 @@ final class MainViewModel{
     
     func getBook(index: Int) -> Book{
         return books[index]
+    }
+    
+    func getSeriesNumber(index: Int) -> Int{
+        return books[index].seriesNumber
     }
     
 }
