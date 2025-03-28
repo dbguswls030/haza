@@ -31,7 +31,6 @@ final class BookInfoStackView: UIStackView {
         stackView.spacing = 8
         stackView.distribution = .fill
         stackView.alignment = .fill
-        
         return stackView
     }()
     
