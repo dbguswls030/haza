@@ -39,14 +39,14 @@ final class HarrayPotterView: UIView {
         return BookInfoStackView()
     }()
     
-    private lazy var didicationStackView: UIStackView = {
+    private lazy var dedicationStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
     }()
     
-    private lazy var didicationTitleLabel: UILabel = {
+    private lazy var dedicationTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Dedication"
         label.font = .systemFont(ofSize: 18, weight: .bold)
@@ -54,7 +54,7 @@ final class HarrayPotterView: UIView {
         return label
     }()
     
-    private lazy var didicationLabel: UILabel = {
+    private lazy var dedicationLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray
@@ -121,7 +121,7 @@ final class HarrayPotterView: UIView {
         addSubview(seriesCollectionView)
         addSubview(scrollView)
         
-        [bookInfoStackView, didicationStackView, summaryStackView, chaptersStackView].forEach{
+        [bookInfoStackView, dedicationStackView, summaryStackView, chaptersStackView].forEach{
             scrollView.addSubview($0)
         }
         
@@ -149,25 +149,27 @@ final class HarrayPotterView: UIView {
             make.width.equalToSuperview().inset(25)
         }
         
-        didicationStackView.snp.makeConstraints { make in
+        dedicationStackView.snp.makeConstraints { make in
             make.top.equalTo(bookInfoStackView.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(20)
             make.width.equalToSuperview().inset(20)
         }
         
-        [didicationTitleLabel, didicationLabel].forEach{
-            didicationStackView.addArrangedSubview($0)
+        [dedicationTitleLabel, dedicationLabel].forEach{
+            dedicationStackView.addArrangedSubview($0)
         }
         
         summaryStackView.snp.makeConstraints { make in
-            make.top.equalTo(didicationStackView.snp.bottom).offset(24)
+            make.top.equalTo(dedicationStackView.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(20)
             make.width.equalToSuperview().inset(20)
         }
         
-        [summaryTitleLabel, summaryLabel].forEach{
+        [summaryTitleLabel, summaryLabel, summaryHorizontalStackView].forEach{
             summaryStackView.addArrangedSubview($0)
         }
+        
+        summaryHorizontalStackView.addArrangedSubview(summaryToggleButton)
         
         chaptersStackView.snp.makeConstraints { make in
             make.top.equalTo(summaryStackView.snp.bottom).offset(24)
@@ -192,7 +194,7 @@ final class HarrayPotterView: UIView {
                           released: book.releaseDate,
                           pages: "\(book.pages)")
         
-        didicationLabel.text = book.dedication
+        dedicationLabel.text = book.dedication
         summaryLabel.text = book.summary
         setChapters(chapters: book.chapters)
     }
