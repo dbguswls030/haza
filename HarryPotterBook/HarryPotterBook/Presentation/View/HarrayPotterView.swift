@@ -204,8 +204,8 @@ final class HarrayPotterView: UIView {
     private func setChapters(chapters: [String]){
         removeChapterTitleStackView() // 스택 뷰에 뷰를 삽입하기 전, 스택 뷰 arrangedSubViews 제거
         
-        chapters.enumerated().forEach{
-            chapterTitleStackView.addArrangedSubview(makeChapterLabel(title: "\($0.offset+1) \($0.element)"))
+        chapters.forEach{
+            chapterTitleStackView.addArrangedSubview(makeChapterLabel(title: $0))
         }
     }
     
