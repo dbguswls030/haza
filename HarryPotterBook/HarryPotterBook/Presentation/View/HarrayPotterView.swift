@@ -29,6 +29,12 @@ final class HarrayPotterView: UIView {
         return collectionView
     }()
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
     private lazy var bookInfoStackView: BookInfoStackView = {
         return BookInfoStackView()
     }()
@@ -91,9 +97,11 @@ final class HarrayPotterView: UIView {
     private func configureLayout(){
         addSubview(bookTitleLabel)
         addSubview(seriesCollectionView)
-        addSubview(bookInfoStackView)
-        addSubview(didicationStackView)
-        addSubview(summaryStackView)
+        addSubview(scrollView)
+        
+        scrollView.addSubview(bookInfoStackView)
+        scrollView.addSubview(didicationStackView)
+        scrollView.addSubview(summaryStackView)
         
         bookTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
@@ -106,28 +114,38 @@ final class HarrayPotterView: UIView {
             make.centerX.equalToSuperview()
             make.height.equalTo(32)
         }
-
-        bookInfoStackView.snp.makeConstraints { make in
+        
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(seriesCollectionView.snp.bottom).offset(16)
+            make.leading.trailing.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
+        bookInfoStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(25)
+            make.width.equalToSuperview().inset(25)
+        }
+        
+        didicationStackView.snp.makeConstraints { make in
+            make.top.equalTo(bookInfoStackView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.width.equalToSuperview().inset(20)
         }
         
         [didicationTitleLabel, didicationLabel].forEach{
             didicationStackView.addArrangedSubview($0)
         }
         
-        didicationStackView.snp.makeConstraints { make in
-            make.top.equalTo(bookInfoStackView.snp.bottom).offset(24)
+        summaryStackView.snp.makeConstraints { make in
+            make.top.equalTo(didicationStackView.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(20)
+            make.width.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().offset(24)
         }
         
         [summaryTitleLabel, summaryLabel].forEach{
             summaryStackView.addArrangedSubview($0)
-        }
-        
-        summaryStackView.snp.makeConstraints { make in
-            make.top.equalTo(didicationStackView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -149,5 +167,4 @@ final class HarrayPotterView: UIView {
     func setBookThumnail(index: Int){
         bookInfoStackView.setBookThumbnail(index: index)
     }
-
 }
