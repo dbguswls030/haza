@@ -42,7 +42,3 @@ final class MainViewModel{
     }
     
 }
-// 1. 오류 전달
-// 2. 오류 전달 받으면 메소드 호출
-// 3. VC에서 메소드 호출 감지되면 Alert 생성
-

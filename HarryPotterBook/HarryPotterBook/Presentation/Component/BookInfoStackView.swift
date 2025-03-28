@@ -120,6 +120,7 @@ final class BookInfoStackView: UIStackView {
         axis = .horizontal
         distribution = .fillProportionally
         spacing = 15
+        alignment = .top
     }
     
     private func configureLayout(){
