@@ -85,6 +85,28 @@ final class HarrayPotterView: UIView {
         return label
     }()
     
+    private lazy var chaptersStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    private lazy var chapterTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Chapters"
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var chapterTitleStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayout()
@@ -99,9 +121,9 @@ final class HarrayPotterView: UIView {
         addSubview(seriesCollectionView)
         addSubview(scrollView)
         
-        scrollView.addSubview(bookInfoStackView)
-        scrollView.addSubview(didicationStackView)
-        scrollView.addSubview(summaryStackView)
+        [bookInfoStackView, didicationStackView, summaryStackView, chaptersStackView].forEach{
+            scrollView.addSubview($0)
+        }
         
         bookTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
@@ -141,11 +163,21 @@ final class HarrayPotterView: UIView {
             make.top.equalTo(didicationStackView.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(20)
             make.width.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().offset(24)
         }
         
         [summaryTitleLabel, summaryLabel].forEach{
             summaryStackView.addArrangedSubview($0)
+        }
+        
+        chaptersStackView.snp.makeConstraints { make in
+            make.top.equalTo(summaryStackView.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.width.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(24)
+        }
+        
+        [chapterTitleLabel, chapterTitleStackView].forEach{
+            chaptersStackView.addArrangedSubview($0)
         }
     }
     
@@ -162,9 +194,33 @@ final class HarrayPotterView: UIView {
         
         didicationLabel.text = book.dedication
         summaryLabel.text = book.summary
+        setChapters(chapters: book.chapters)
     }
     
     func setBookThumnail(index: Int){
         bookInfoStackView.setBookThumbnail(index: index)
+    }
+    
+    private func setChapters(chapters: [String]){
+        removeChapterTitleStackView() // 스택 뷰에 뷰를 삽입하기 전, 스택 뷰 arrangedSubViews 제거
+        
+        chapters.enumerated().forEach{
+            chapterTitleStackView.addArrangedSubview(makeChapterLabel(title: "\($0.offset+1) \($0.element)"))
+        }
+    }
+    
+    // chapterTitleStackView에서 arrangedSubViews를 제거
+    private func removeChapterTitleStackView(){
+        let arrangedSubViews = chapterTitleStackView.arrangedSubviews
+        chapterTitleStackView.arrangedSubviews.forEach(chapterTitleStackView.removeArrangedSubview(_:))
+        arrangedSubViews.forEach{$0.removeFromSuperview()}
+    }
+    
+    private func makeChapterLabel(title: String) -> UILabel{
+        let label = UILabel()
+        label.text = title
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .darkGray
+        return label
     }
 }
