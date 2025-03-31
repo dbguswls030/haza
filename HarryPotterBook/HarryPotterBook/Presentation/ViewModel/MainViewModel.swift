@@ -11,10 +11,15 @@ final class MainViewModel{
     private let dataService = DataService()
     
     private var books: [Book] = []
+    private var summaryToggleButtonStates: [Bool] = Array(repeating: false, count: 7)
+    
+    private var selectedSeriesNumber: Int = 0
     
     var jsonParseErrorListenr: ((String) -> Void)?
     var successedLoad: (() -> Void)?
 
+    var tapSummaryToggleButton: (() -> Void)?
+    
     func loadBooks() {
         dataService.loadBooks { [weak self] result in
             guard let self = self else { return }
@@ -29,6 +34,10 @@ final class MainViewModel{
         }
     }
     
+    func getSummaryButtonToggleStates(index: Int) -> Bool{
+        return summaryToggleButtonStates[index]
+    }
+    
     func getBookTitle(index: Int) -> String {
         return books[index].title
     }
@@ -41,4 +50,15 @@ final class MainViewModel{
         return books[index].seriesNumber
     }
     
+    func getSummary(index: Int) -> String{
+        return books[index].summary
+    }
+    
+    func setSelectedSeriesNumber(number: Int){
+        selectedSeriesNumber = number
+    }
+    
+    func getSeletedSeriesNumber() -> Int{
+        return selectedSeriesNumber
+    }
 }

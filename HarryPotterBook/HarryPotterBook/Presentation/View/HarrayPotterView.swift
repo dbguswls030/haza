@@ -85,6 +85,22 @@ final class HarrayPotterView: UIView {
         return label
     }()
     
+    private lazy var summaryHorizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .trailing
+        return stackView
+    }()
+    
+    lazy var summaryToggleButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("더 보기", for: .normal)
+        button.setTitle("접기", for: .selected)
+        button.setTitleColor(.tintColor, for: .normal)
+        button.setTitleColor(.tintColor, for: .selected)
+        return button
+    }()
+    
     private lazy var chaptersStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -187,7 +203,7 @@ final class HarrayPotterView: UIView {
         bookTitleLabel.text = title
     }
     
-    func setBookInfo(book: Book){
+    func setBookInfo(book: Book, summaryToggleState: Bool){
         bookInfoStackView
             .setBookInfo(title: book.title,
                           author: book.author,
@@ -195,12 +211,31 @@ final class HarrayPotterView: UIView {
                           pages: "\(book.pages)")
         
         dedicationLabel.text = book.dedication
-        summaryLabel.text = book.summary
+        
+        setSummaryHiddenState(isHidden: book.summary.count < 450)
+        setSummarySelectedState(isSelected: summaryToggleState)
+        toggleSummary(summary: book.summary)
         setChapters(chapters: book.chapters)
     }
     
     func setBookThumnail(index: Int){
         bookInfoStackView.setBookThumbnail(index: index)
+    }
+    
+    private func setSummaryHiddenState(isHidden: Bool){
+        summaryToggleButton.isHidden = isHidden
+    }
+    
+    private func setSummarySelectedState(isSelected: Bool){
+        summaryToggleButton.isSelected = isSelected
+    }
+    
+    func toggleSummary(summary: String){
+        if summaryToggleButton.isSelected{
+            summaryLabel.text = summary
+        }else{
+            summaryLabel.text = summary.prefix(450) + "..."
+        }
     }
     
     private func setChapters(chapters: [String]){
