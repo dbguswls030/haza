@@ -213,8 +213,8 @@ final class HarrayPotterView: UIView {
         dedicationLabel.text = book.dedication
         
         setSummaryHiddenState(isHidden: book.summary.count < 450)
-        setSummarySelectedState(isSelected: summaryToggleState)
-        toggleSummary(summary: book.summary)
+        toggleSummaryState(isSelected: summaryToggleState)
+        updateSummary(summary: book.summary)
         setChapters(chapters: book.chapters)
     }
     
@@ -226,11 +226,11 @@ final class HarrayPotterView: UIView {
         summaryToggleButton.isHidden = isHidden
     }
     
-    private func setSummarySelectedState(isSelected: Bool){
+    func toggleSummaryState(isSelected: Bool){
         summaryToggleButton.isSelected = isSelected
     }
     
-    func toggleSummary(summary: String){
+    func updateSummary(summary: String){
         if summaryToggleButton.isSelected{
             summaryLabel.text = summary
         }else{

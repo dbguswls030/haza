@@ -48,6 +48,7 @@ final class MainViewController: UIViewController {
     }
     
     private func setBookInfo(index: Int){
+        print(viewModel.getSummaryButtonToggleStates(index: index))
         harrayPotterView.setBookInfo(book: viewModel.getBook(index: index), summaryToggleState: viewModel.getSummaryButtonToggleStates(index: index))
         harrayPotterView.setBookThumnail(index: index)
     }
@@ -70,8 +71,10 @@ final class MainViewController: UIViewController {
         
         viewModel.tapSummaryToggleButton = { [weak self] in
             guard let self = self else { return }
-            self.harrayPotterView.summaryToggleButton.isSelected.toggle()
-            self.harrayPotterView.toggleSummary(summary: self.viewModel.getSummary(index: self.viewModel.getSeletedSeriesNumber()))
+            self.viewModel.toggleSummaryStates(index: self.viewModel.getSeletedSeriesNumber())
+            self.harrayPotterView.toggleSummaryState(isSelected: self.viewModel.getSummaryButtonToggleStates(index: self.viewModel.getSeletedSeriesNumber()))
+            self.harrayPotterView.updateSummary(summary: self.viewModel.getSummary(index: self.viewModel.getSeletedSeriesNumber()))
+            
         }
     }
     
