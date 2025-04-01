@@ -83,4 +83,8 @@ final class MainViewModel{
     func getSeletedSeriesNumber() -> Int{
         return selectedSeriesNumber
     }
+    
+    func getNumberOfSeries() -> Int{
+        return books.count
+    }
 }
