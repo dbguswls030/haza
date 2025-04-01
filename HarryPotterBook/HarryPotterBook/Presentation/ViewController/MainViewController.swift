@@ -29,6 +29,11 @@ final class MainViewController: UIViewController {
         viewModel.loadBooks()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.harrayPotterView.seriesCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
     private func configureLayout(){
         view.backgroundColor = .systemBackground
         view.addSubview(harrayPotterView)
@@ -89,6 +94,7 @@ final class MainViewController: UIViewController {
         viewModel.tapSummaryToggleButton?()
     }
 }
+
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.getNumberOfSeries()
@@ -104,11 +110,13 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
         let cellWidth: Int = 32
         let totalCellWidth = cellWidth * collectionView.numberOfItems(inSection: section)
         let defaultCellSpacing = 10
         let totalSpacing = (collectionView.numberOfItems(inSection: section) - 1) * defaultCellSpacing
-        let horizontalInset = max((collectionView.frame.width - CGFloat(totalCellWidth) - CGFloat(totalSpacing))  / 2, 0) // 음수 방지
+        
+        let horizontalInset = (collectionView.frame.width - (CGFloat(totalCellWidth) + CGFloat(totalSpacing))) / 2 // 음수 방지
         return UIEdgeInsets(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
     }
     
