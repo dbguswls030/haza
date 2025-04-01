@@ -48,7 +48,6 @@ final class MainViewController: UIViewController {
     }
     
     private func setBookInfo(index: Int){
-        print(viewModel.getSummaryButtonToggleStates(index: index))
         harrayPotterView.setBookInfo(book: viewModel.getBook(index: index), summaryToggleState: viewModel.getSummaryButtonToggleStates(index: index))
         harrayPotterView.setBookThumnail(index: index)
     }
@@ -94,13 +93,14 @@ final class MainViewController: UIViewController {
 }
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return viewModel.getNumberOfSeries()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SeriesCollectionViewCell.identifier, for: indexPath) as? SeriesCollectionViewCell else {
             return UICollectionViewCell()
         }
+        if indexPath.item == 0 { collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init()) } // 1번 시리즈 선택된 상태로 초기화
         cell.setSeriesNumber(number: viewModel.getSeriesNumber(index: indexPath.item))
         return cell
     }
@@ -112,5 +112,15 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let totalSpacing = (collectionView.numberOfItems(inSection: section) - 1) * defaultCellSpacing
         let horizontalInset = max((collectionView.frame.width - CGFloat(totalCellWidth) - CGFloat(totalSpacing))  / 2, 0) // 음수 방지
         return UIEdgeInsets(top: 0, left: horizontalInset, bottom: 0, right: horizontalInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.viewModel.setSelectedSeriesNumber(number: indexPath.item)
+            self.setBookTitle(index: indexPath.item)
+            self.setBookInfo(index: indexPath.item)
+        }
     }
 }

@@ -219,7 +219,10 @@ final class HarrayPotterView: UIView {
     }
     
     func setBookThumnail(index: Int){
-        bookInfoStackView.setBookThumbnail(index: index)
+        DispatchQueue.main.async { [weak self] in
+            self?.bookInfoStackView.setBookThumbnail(index: index)
+        }
+        
     }
     
     private func setSummaryHiddenState(isHidden: Bool){

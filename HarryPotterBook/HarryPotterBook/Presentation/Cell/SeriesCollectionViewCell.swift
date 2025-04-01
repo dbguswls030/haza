@@ -11,12 +11,29 @@ import SnapKit
 final class SeriesCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "SeriesCollectionViewCell"
-        
+    
+    override var isSelected: Bool{
+        didSet{
+            if isSelected{
+                DispatchQueue.main.async { [weak self] in
+                    self?.seriesNumberLabel.textColor = .white
+                    self?.backgroundColor = .systemBlue
+                }
+                
+            }else{
+                DispatchQueue.main.async { [weak self] in
+                    self?.seriesNumberLabel.textColor = .tintColor
+                    self?.backgroundColor = .systemGray6
+                }
+            }
+        }
+    }
+    
     private lazy var seriesNumberLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = .tintColor
         return label
     }()
     
@@ -31,7 +48,7 @@ final class SeriesCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureLayout(){
-        backgroundColor = .systemBlue
+        backgroundColor = .systemGray6
         clipsToBounds = true
         layer.cornerRadius = 16
         
