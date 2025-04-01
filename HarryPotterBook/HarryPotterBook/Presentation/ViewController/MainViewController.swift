@@ -48,21 +48,33 @@ final class MainViewController: UIViewController {
     }
     
     private func setBookInfo(index: Int){
-        harrayPotterView.setBookInfo(book: viewModel.getBook(index: index))
+        print(viewModel.getSummaryButtonToggleStates(index: index))
+        harrayPotterView.setBookInfo(book: viewModel.getBook(index: index), summaryToggleState: viewModel.getSummaryButtonToggleStates(index: index))
         harrayPotterView.setBookThumnail(index: index)
     }
     
     private func bindViewModel(){
         viewModel.successedLoad = { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.async{
-                self?.setBookTitle(index: 2)
-                self?.setBookInfo(index: 2)
-                self?.configureSeriesCollectionView()
+                self.setBookTitle(index: 0)
+                self.setBookInfo(index: 0)
+                self.configureSeriesCollectionView()
+                self.setSummaryToggleButtonAction()
             }
         }
         
         viewModel.jsonParseErrorListenr = { [weak self] error in
-            self?.showAlert(message: error)
+            guard let self = self else { return }
+            self.showAlert(message: error)
+        }
+        
+        viewModel.tapSummaryToggleButton = { [weak self] in
+            guard let self = self else { return }
+            self.viewModel.toggleSummaryStates(index: self.viewModel.getSeletedSeriesNumber())
+            self.harrayPotterView.toggleSummaryState(isSelected: self.viewModel.getSummaryButtonToggleStates(index: self.viewModel.getSeletedSeriesNumber()))
+            self.harrayPotterView.updateSummary(summary: self.viewModel.getSummary(index: self.viewModel.getSeletedSeriesNumber()))
+            
         }
     }
     
@@ -70,6 +82,14 @@ final class MainViewController: UIViewController {
         let alertVC = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "확인", style: .default))
         self.present(alertVC, animated: true)
+    }
+    
+    private func setSummaryToggleButtonAction(){
+        harrayPotterView.summaryToggleButton.addTarget(self, action: #selector(toggleSummaryToggleButton), for: .touchUpInside)
+    }
+    
+    @objc private func toggleSummaryToggleButton(){
+        viewModel.tapSummaryToggleButton?()
     }
 }
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
