@@ -24,7 +24,6 @@ final class HarrayPotterView: UIView {
         collectionViewLayout.itemSize = CGSize(width: 32, height: 32)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.register(SeriesCollectionViewCell.self, forCellWithReuseIdentifier: SeriesCollectionViewCell.identifier)
-        collectionView.contentMode = .center
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
@@ -148,8 +147,7 @@ final class HarrayPotterView: UIView {
         
         seriesCollectionView.snp.makeConstraints { make in
             make.top.equalTo(bookTitleLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.lessThanOrEqualToSuperview().inset(20)
             make.height.equalTo(32)
         }
         
