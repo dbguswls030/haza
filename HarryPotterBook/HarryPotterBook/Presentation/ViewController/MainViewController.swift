@@ -55,12 +55,10 @@ final class MainViewController: UIViewController {
     private func bindViewModel(){
         viewModel.successedLoad = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.async{
-                self.setBookTitle(index: 0)
-                self.setBookInfo(index: 0)
-                self.configureSeriesCollectionView()
-                self.setSummaryToggleButtonAction()
-            }
+            self.setBookTitle(index: 0)
+            self.setBookInfo(index: 0)
+            self.configureSeriesCollectionView()
+            self.setSummaryToggleButtonAction()
         }
         
         viewModel.jsonParseErrorListenr = { [weak self] error in
@@ -115,12 +113,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            self.viewModel.setSelectedSeriesNumber(number: indexPath.item)
-            self.setBookTitle(index: indexPath.item)
-            self.setBookInfo(index: indexPath.item)
-        }
+        viewModel.setSelectedSeriesNumber(number: indexPath.item)
+        setBookTitle(index: indexPath.item)
+        setBookInfo(index: indexPath.item)
     }
 }
