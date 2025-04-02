@@ -73,8 +73,11 @@ final class MainViewController: UIViewController {
         
         viewModel.tapSummaryToggleButton = { [weak self] in
             guard let self = self else { return }
+            // 1. 현재 시리즈의 더보기 toggle 상태 변경
             self.viewModel.toggleSummaryStates(index: self.viewModel.getSeletedSeriesNumber())
+            // 2. 변경된 toggle 상태를 button.isSelected에 반영
             self.harrayPotterView.toggleSummaryState(isSelected: self.viewModel.getSummaryButtonToggleStates(index: self.viewModel.getSeletedSeriesNumber()))
+            // 3. 버튼 isSelected 상태에 따른 text로 업데이트
             self.harrayPotterView.updateSummary(summary: self.viewModel.getSummary(index: self.viewModel.getSeletedSeriesNumber()))
             
         }
