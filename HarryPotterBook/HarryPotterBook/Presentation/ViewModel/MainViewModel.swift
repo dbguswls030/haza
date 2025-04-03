@@ -14,6 +14,7 @@ final class MainViewModel{
     
     private var summaryToggleButtonStates: [Bool] = [] {
         didSet{
+            // summary 더보기 toggle 버튼 State가 업데이트 될 때마다 UserDefaults에 저장
             dataService.uploadSummaryToggleState(states: summaryToggleButtonStates)
         }
     }
@@ -25,6 +26,7 @@ final class MainViewModel{
     var tapSummaryToggleButton: (() -> Void)?
     
     init(){
+        // ViewModel init 시 summary 더보기 버튼 상태 값 불러오기
         dataService.loadSummaryToggleState { [weak self] result in
             guard let self = self else { return }
             
@@ -32,6 +34,7 @@ final class MainViewModel{
             case .success(let states):
                 self.summaryToggleButtonStates = states
             case .failure(_):
+                // UserDefaults에서 찾을 수 없는 값이라면(앱 최초 실행 시) 디폴트 값
                 let defaultStates = Array(repeating: false, count: 7)
                 self.summaryToggleButtonStates = defaultStates
             }
