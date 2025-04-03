@@ -42,6 +42,5 @@ final class DataService {
         }else{
             completion(.failure(DataError.NotFoundedUserDefaults))
         }
-        
     }
 }
