@@ -75,10 +75,10 @@ struct Book{
 - 더보기 버튼도 UIStackView 내부에 추가하여 버튼 숨기기 시 높이 반영
 
 더보기 있을 경우
-![Image](https://github.com/user-attachments/assets/0223e76f-23c3-4f59-8000-a083900c019c)
-더보기 없을 경우
 ![Image](https://github.com/user-attachments/assets/de54741d-53f0-46b1-b813-fe1caf5580dd)
 
+더보기 없을 경우
+![Image](https://github.com/user-attachments/assets/0223e76f-23c3-4f59-8000-a083900c019c)
 ## 3. 더보기 버튼 활성화 유무 값 앱을 종료해도 유효하도록 하기
 - UserDefaults 사용
 - 시리즈 번호 별로 더보기 활성화 상태를 저장하기 위해 배열로 저장 
