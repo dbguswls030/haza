@@ -26,7 +26,6 @@ final class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         
         bindViewModel()
-        viewModel.loadBooks()
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,7 +58,9 @@ final class MainViewController: UIViewController {
     }
     
     private func bindViewModel(){
-        viewModel.successedLoad = { [weak self] in
+        viewModel.action?(.loadSummaryStates)
+        
+        viewModel.state.successedLoadBooks = { [weak self] in
             guard let self = self else { return }
             self.setBookTitle(index: 0)
             self.setBookInfo(index: 0)
@@ -67,21 +68,20 @@ final class MainViewController: UIViewController {
             self.setSummaryToggleButtonAction()
         }
         
-        viewModel.jsonParseErrorListenr = { [weak self] error in
+        viewModel.state.jsonParseErrorListenr = { [weak self] error in
             guard let self = self else { return }
             self.showAlert(message: error)
         }
         
-        viewModel.tapSummaryToggleButton = { [weak self] in
+        viewModel.state.tapSummaryToggleButton = { [weak self] in
             guard let self = self else { return }
-            // 1. 현재 시리즈의 더보기 toggle 상태 변경
-            self.viewModel.toggleSummaryStates(index: self.viewModel.getSeletedSeriesNumber())
-            // 2. 변경된 toggle 상태를 button.isSelected에 반영
+            // 1. 변경된 toggle 상태를 button.isSelected에 반영
             self.harrayPotterView.toggleSummaryState(isSelected: self.viewModel.getSummaryButtonToggleStates(index: self.viewModel.getSeletedSeriesNumber()))
-            // 3. 버튼 isSelected 상태에 따른 text로 업데이트
-            self.harrayPotterView.updateSummary(summary: self.viewModel.getSummary(index: self.viewModel.getSeletedSeriesNumber()))
             
+            // 2. 버튼 isSelected 상태에 따른 text로 업데이트
+            self.harrayPotterView.updateSummary(summary: self.viewModel.getSummary(index: self.viewModel.getSeletedSeriesNumber()))
         }
+        viewModel.action?(.loadBooks)
     }
     
     private func showAlert(message: String){
@@ -95,7 +95,7 @@ final class MainViewController: UIViewController {
     }
     
     @objc private func toggleSummaryToggleButton(){
-        viewModel.tapSummaryToggleButton?()
+        viewModel.action?(.toggleButton(viewModel.state.selectedSeriesNumber))
     }
 }
 
@@ -126,7 +126,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 시리즈 숫자 클릭 시 UI 업데이트
-        viewModel.setSelectedSeriesNumber(number: indexPath.item)
+        viewModel.action?(.selectedSeriesNumber(indexPath.item))
         setBookTitle(index: indexPath.item)
         setBookInfo(index: indexPath.item)
     }
