@@ -31,6 +31,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // layout 변경 시(디바이스 회전) collectionView layout 업데이트
         self.harrayPotterView.seriesCollectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -124,6 +125,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 시리즈 숫자 클릭 시 UI 업데이트
         viewModel.setSelectedSeriesNumber(number: indexPath.item)
         setBookTitle(index: indexPath.item)
         setBookInfo(index: indexPath.item)
