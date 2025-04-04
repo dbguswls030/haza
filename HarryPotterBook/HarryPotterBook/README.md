@@ -153,7 +153,7 @@ final class MainViewModel{
     }
 ```
 
-## 5. 디바이스 회전 시에도 layout 대응하기
+## 5. 디바이스 회전 시에도 layout 대응하기 - 트러블 슈팅
 - Autolayout 적용하여 대응
 - 디바이스 회전 시 UICollectionView의 ContentOffset 가운데로 정렬되지 않아 viewDidLayoutSubviews()를 활용하여 해결
 ```
@@ -163,3 +163,20 @@ final class MainViewModel{
         CollectionView.collectionViewLayout.invalidateLayout()
     }
 ```  
+
+## 6. 단방향 흐름 구조 viewModel
+- action - 이벤트
+- Mutation - 이벤트에 대한 로직
+- State - 로직 이후에 업데이트 될 상태 값,  
+
+```
+protocol ViewModelProtocol{
+    associatedtype Action
+    associatedtype Mutation
+    associatedtype State
+    
+    var action: ((Action) -> Void)? { get }
+    func mutate(action: Action)
+    func reduce(mutation: Mutation)
+}
+```
